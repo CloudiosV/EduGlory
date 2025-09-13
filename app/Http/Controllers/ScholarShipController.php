@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Notifications\DeadlineReminder;
 
-class BeasiswaController extends Controller
+class ScholarShipController extends Controller
 {
     public function store(Request $request)
     {
