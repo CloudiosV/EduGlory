@@ -9,6 +9,9 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return redirect('/home');
+        }
         return view('auth.login');
     }
 
@@ -19,10 +22,14 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->remember)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+
+            return Auth::user()->role === 'admin'
+                ? redirect()->route('admin.dashboard')
+                : redirect()->route('home');
         }
+
 
         return back()->withErrors([
             'email' => 'Email atau password salah.',

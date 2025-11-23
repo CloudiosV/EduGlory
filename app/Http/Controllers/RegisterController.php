@@ -12,6 +12,9 @@ class RegisterController extends Controller
 {
     public function showRegisterForm()
     {
+        if (Auth::check()) {
+            return redirect('/home');
+        }
         return view('auth.register');
     }
 
@@ -27,10 +30,11 @@ class RegisterController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
+            'role'     => 'user',
         ]);
 
         Auth::login($user);
 
-        return redirect('/dashboard'); // ubah sesuai halaman utama
+        return redirect()->route('login.form')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 }

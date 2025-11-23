@@ -1,68 +1,212 @@
-# 📦 TrackIn  
+# 📦 Edu Glory – Scholarship & Competition Platform
 
-🎓 Edu Glory adalah sebuah portal beasiswa dan lomba yang membantu pelajar dalam menemukan peluang beasiswa, mengikuti kompetisi, serta mengembangkan potensi diri untuk meraih prestasi terbaik. 
+Edu Glory adalah platform yang dirancang untuk membantu pelajar menemukan peluang beasiswa, mengikuti kompetisi, menyimpan item favorit, serta menerima notifikasi penting terkait batas waktu atau pembaruan informasi.  
+Platform ini bertujuan menjadi pusat pencarian prestasi bagi pelajar yang ingin berkembang dan meraih kesempatan terbaik.
 
-## ✨ Fitur Utama  
-Saat ini, proyek masih dalam tahap awal pengembangan, namun sudah memiliki simulasi beberapa fitur:  
-- 📊 *Dashboard* – menampilkan informasi beasiswa & lomba.   
-- 🕒 *Favorite* – menampilkan list yang kita favorite.  
-- 🔔 *Notifikasi* – pemberitahuan terkait batas pendaftaran terakhir lomba atau beasiswa.  
-- 🔍 *Filter* – memudahkan pencarian barang.  
-- 🗄 *Database* – penyimpanan data inventaris dan transaksi.  
+---
+
+## ✨ Fitur Utama
+
+### 👤 Authentication System
+- Login & Logout  
+- Perlindungan halaman dengan Middleware  
+
+### 🎓 Scholarship & Competition
+- Melihat daftar beasiswa & lomba  
+- Melihat detail beasiswa/lomba  
+- Menerima notifikasi batas pendaftaran  
+- Bookmark / favorite item  
+
+### ⭐ Favorite System
+- Simpan dan kelola item favorit (bookmark)  
+
+### 🔔 Notification System
+- Notifikasi untuk deadline  
+- Tandai notifikasi sebagai dibaca  
+- Hapus notifikasi  
+
+### 🏠 Dashboard (Admin)
+Admin dapat:  
+- Melihat statistik (most viewed, most applied)  
+- Mengelola data beasiswa & lomba  
+- Menambah, mengedit, dan menghapus item  
+- Melihat daftar user  
+
+### 🎨 User Interface
+- Sidebar navigasi  
+- Halaman detail item  
+- Slideshow banner (homepage)  
+- UI berbasis TailwindCSS  
+
+---
 
 ## 🛠 Tech Stack
-- Laravel (Backend & Framework)
-- MySQL (Database)
-- Blade + Tailwind (Frontend)
-- Composer & NPM (Dependencies)
 
-⚠ Catatan:  
-- Proyek ini *belum sepenuhnya responsif* di semua perangkat.  
-- Masih akan terus dikembangkan dengan penambahan fitur baru & perbaikan.  
+**Backend**  
+- Laravel 11  
+- PHP 8+  
+- Laravel Notifications  
 
-## 🚀 Instalasi & Penggunaan  
+**Frontend**  
+- Blade Template  
+- TailwindCSS  
+- Font Awesome  
 
-1. *Clone Repository*  
-   bash
-   git clone https://github.com/CloudiosV/EduGlory.git
-   cd EduGlory
-   
+**Database**  
+- MySQL  
+- phpMyAdmin  
 
-2. *Instalasi Dependensi*  
-   Pastikan sudah menginstal [Composer](https://getcomposer.org/) dan [Node.js](https://nodejs.org/).  
-   bash
-   composer install
-   npm install 
-   npm run dev
-   
+**Tools & Development**  
+- Visual Studio Code  
+- Composer  
+- NPM  
+- Laragon  
+- GitHub  
+- Figma (UI Design)  
 
-3. *Konfigurasi Environment*  
-   Buat file .env dari template:  
-   bash
-   cp .env.example .env
-   
-   Lalu sesuaikan konfigurasi database dan pengaturan lain di file .env.  
+---
 
-4. *Generate App Key*  
-   bash
-   php artisan key:generate
-   
+## 📂 Project Structure
 
-5. *Migrasi Database*  
-   bash
-   php artisan migrate --seed
-   
+**Controllers**  
+- HomeController  
+- ScholarshipController  
+- CompetitionController  
+- BookmarkController  
+- NotificationController  
+- AdminController  
 
-6. *Jalankan Aplikasi*  
-   bash
-   php artisan serve
-     
+**Models**  
+- User  
+- Scholarship  
+- Bookmark  
+- Notification  
 
-## 📌 Rencana Pengembangan  
-- Tampilan Responsif – Akses mudah di berbagai perangkat, mulai dari HP hingga laptop.
-- Sistem Role User – Manajemen akun terpisah untuk Admin, Siswa, dan Guru agar lebih terstruktur. 
-- Laporan & Statistik – Penyajian data pendaftaran beasiswa dan lomba dalam bentuk laporan dan grafik yang informatif.
+**Migrations**  
+- create_users_table  
+- create_scholarships_table  
+- create_bookmarks_table  
+- create_notifications_table  
 
-## 🙏 Penutup  
-✨ Edu Glory masih dalam tahap awal pengembangan 🚧, namun kami yakin platform ini akan menjadi pintu bagi pelajar untuk lebih mudah menemukan beasiswa dan lomba bergengsi.
-Kami sangat terbuka terhadap kritik, saran, maupun kontribusi dari komunitas untuk menjadikan Edu Glory semakin bermanfaat.
+**Views**  
+
+**📱 User**  
+- home/index.blade.php  
+- home/show.blade.php  
+- scholarship/index.blade.php  
+- contest/index.blade.php  
+- notifications/index.blade.php  
+- bookmarks/index.blade.php  
+
+**🛠 Admin**  
+- admin/index.blade.php  
+- admin/scholarship/index.blade.php  
+- admin/competition/index.blade.php  
+- admin/... (CRUD pages)  
+
+---
+
+## 🧱 Database Overview
+
+**Users Table**  
+- id  
+- name  
+- email  
+- password  
+- role (admin/user)  
+- profile_picture  
+
+**Scholarships / Competitions Table**  
+- id  
+- title  
+- description  
+- organizer  
+- picture  
+- address  
+- registration_link  
+- category_id (1 = scholarship, 2 = competition)  
+- view_count  
+- apply_count  
+
+**Bookmarks Table**  
+- id  
+- user_id  
+- item_id  
+- tipe (scholarship/contest)  
+
+**Notifications Table**  
+- id  
+- user_id  
+- data (JSON)  
+- read_at  
+
+---
+
+## 🔄 Application Flow
+
+### 👤 For Users
+1. Login ke aplikasi  
+2. Masuk ke Homepage  
+3. Melihat beasiswa & kompetisi terbaru  
+4. Mengklik item → membuka detail  
+5. Bookmark item jika tertarik  
+6. Mengaktifkan notifikasi (deadline reminder)  
+7. Melihat notifikasi terbaru  
+8. Mengelola bookmark dari menu Favorite  
+
+### 🛠 For Admin
+1. Login sebagai Admin  
+2. Masuk Dashboard  
+3. Mengelola:  
+   - Beasiswa  
+   - Kompetisi  
+   - User  
+4. Melihat statistik view & apply  
+5. Menambah / mengedit / menghapus data  
+6. Mengelola banner homepage  
+
+---
+
+## 🚀 Instalasi & Penggunaan
+
+1. **Clone Repository**
+```bash
+git clone https://github.com/CloudiosV/EduGlory.git
+cd EduGlory
+
+2. **Install Dependencies**
+composer install
+npm install
+npm run dev
+
+3. **Setup Environment**
+cp .env.example .env
+
+4. **Generate App Key**
+php artisan key:generate
+
+5. **Migrasi Database + Seeder**
+php artisan migrate --seed
+
+6. **Jalankan Server**
+php artisan serve
+
+📌 Rencana Pengembangan
+
+- 📱 Tampilan Mobile Responsif
+
+- 🧑‍💼 Role User yang lebih lengkap (Admin / Guru / Siswa)
+
+- 📊 Laporan pendaftaran & statistik beasiswa/lomba
+
+- 📨 Email notification system
+
+- 🗃 Manajemen banner dari Admin Panel
+
+🙏 Penutup
+
+Edu Glory masih dalam tahap aktif pengembangan 🚧.
+Kami berharap platform ini dapat membantu pelajar menemukan peluang beasiswa dan kompetisi dengan lebih mudah, cepat, dan terstruktur.
+
+Setiap saran, kritik, dan kontribusi dari komunitas sangat kami hargai ❤️
+Mari bersama membangun platform yang bermanfaat bagi banyak pelajar.

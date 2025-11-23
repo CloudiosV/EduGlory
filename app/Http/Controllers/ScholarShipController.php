@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Scholarship;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Notifications\DeadlineReminder;
 
-class ScholarShipController extends Controller
+class ScholarshipController extends Controller
 {
-    public function store(Request $request)
+    public function index()
     {
-        // logika simpan beasiswa ke database
-        // Beasiswa::create([...]);
+        // Ambil data beasiswa kategori_id = 1 dengan pagination
+        $scholarships = Scholarship::where('category_id', 1)
+            ->latest()
+            ->paginate(4);
 
-        // contoh ambil semua user
-        $users = User::all();
+        return view('scholarship.index', compact('scholarships'));
+    }
 
-        foreach ($users as $user) {
-            $user->notify(new DeadlineReminder("Ada beasiswa baru! Deadline tinggal 3 hari lagi."));
-        }
-
-        return redirect()->back()->with('success', 'Beasiswa berhasil ditambahkan dan notifikasi terkirim!');
+    public function show($id)
+    {
+        // Tampilkan detail beasiswa berdasarkan ID
+        $item = Scholarship::findOrFail($id);
+        return view('home.show', compact('item'));
     }
 }

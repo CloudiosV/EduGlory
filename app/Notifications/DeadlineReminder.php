@@ -3,31 +3,34 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class DeadlineReminder extends Notification
 {
     use Queueable;
 
-    protected $pesan;
+    public $item;
+    public $daysLeft;
 
-    public function __construct($pesan)
+    public function __construct($item, $daysLeft)
     {
-        $this->pesan = $pesan;
+        $this->item = $item;
+        $this->daysLeft = $daysLeft;
     }
 
-    public function via(object $notifiable): array
+    public function via($notifiable)
     {
-        // Bisa ke database, email, broadcast, dll
         return ['database'];
     }
 
-    public function toDatabase(object $notifiable): array
+    public function toDatabase($notifiable)
     {
         return [
-            'pesan' => $this->pesan,
+            'title' => $this->item->title,
+            'message' => "Sisa $this->daysLeft hari lagi untuk mendaftar!",
+            'picture' => $this->item->picture,
+            'category_id' => $this->item->category_id,
+            'item_id' => $this->item->id,
         ];
     }
 }
